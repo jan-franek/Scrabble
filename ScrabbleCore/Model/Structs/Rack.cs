@@ -1,8 +1,8 @@
 ﻿namespace ScrabbleCore.Structs;
 
-public struct Rack<T>
+public class Rack<T>
 {
-	private readonly T?[] rack;
+	public readonly T?[] rack;
 
 	public const int Size = 7;
 
@@ -27,7 +27,7 @@ public struct Rack<T>
 
 	public T? this[int i]
 	{
-		readonly get => rack[i];
+		get => rack[i];
 		set => rack[i] = value;
 	}
 

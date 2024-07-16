@@ -23,7 +23,7 @@ public struct Pouch
 	/// <exception cref="InvalidOperationException">Thrown when you try to draw a tile from an empty pouch.</exception>
 	public Tile Draw()
 	{
-		if (letters.Count == 0)
+		if (IsEmpty)
 		{
 			throw new InvalidOperationException("The pouch is empty.");
 		}
