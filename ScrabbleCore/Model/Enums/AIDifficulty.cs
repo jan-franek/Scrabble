@@ -5,5 +5,4 @@ public enum AIDifficulty : byte
 	Easy,
 	Medium,
 	Hard,
-	God,
 }

@@ -1,11 +1,15 @@
-﻿namespace ScrabbleCore.Structs;
+﻿namespace ScrabbleCore.Classes;
 
-public struct Board<T>
+/// <summary>
+/// Generic class representing a board.
+/// </summary>
+/// <typeparam name="T"> The type contained in the cells of the board. </typeparam>
+public class Board<T>
 {
-	private readonly T?[,] board;
-
 	public const int Height = 15;
 	public const int Width = 15;
+
+	private readonly T?[,] board;
 
 	public Board(T? defaultValue = default)
 	{
@@ -28,7 +32,7 @@ public struct Board<T>
 
 	public T? this[int y, int x]
 	{
-		readonly get => board[y, x];
+		get => board[y, x];
 		set => board[y, x] = value;
 	}
 

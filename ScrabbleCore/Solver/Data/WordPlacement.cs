@@ -2,6 +2,10 @@
 
 namespace ScrabbleCore.Solver.Data;
 
+/// <summary>
+/// Represents a word placement.
+/// Mirrors the WordPlacement struct in scrabble_solver.
+/// </summary>
 public readonly struct WordPlacement(string word, Coordinates startTile, Direction direction)
 {
   [JsonPropertyName("dir")]

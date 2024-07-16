@@ -1,5 +1,5 @@
-﻿using ScrabbleCore.Enums;
-using ScrabbleCore.Structs;
+﻿using ScrabbleCore.Classes;
+using ScrabbleCore.Enums;
 
 namespace ScrabbleCore;
 

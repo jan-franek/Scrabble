@@ -2,10 +2,31 @@
 
 namespace ScrabbleCore.Structs;
 
+/// <summary>
+/// Represents a tile in the game.
+/// </summary>
 public readonly struct Tile : IEquatable<Tile>
 {
-	public char Letter { get; }
-	public TileType Type { get; }
+	/// <summary>
+	/// Initializes a new instance of the <see cref="Tile"/> struct.
+	/// Only use this constructor for letters.
+	/// For empty tiles, use <see cref="Empty"/>.
+	/// For blank tiles, use <see cref="Blank"/>.
+	/// </summary>
+	/// <param name="letter"> Uppercase letter to represent the tile. </param>
+	/// <exception cref="ArgumentOutOfRangeException"> Thrown when the letter is not an uppercase letter. </exception>
+	public Tile(char letter)
+	{
+		if (letter is < 'A' or > 'Z')
+		{
+			throw new ArgumentOutOfRangeException(nameof(letter), "Letter must be an uppercase letter.");
+		}
+
+		Letter = letter;
+		Type = TileType.Letter;
+	}
+
+	public override string ToString() => Letter.ToString();
 
 	private Tile(char letter, TileType type)
 	{
@@ -13,22 +34,20 @@ public readonly struct Tile : IEquatable<Tile>
 		Type = type;
 	}
 
-	#region Static Members
-	public static Tile Empty => GetEmpty();
-	public static Tile Blank => GetBlank();
-
-	public static Tile GetLetter(char letter)
+	public char Letter { get; init; }
+	public TileType Type { get; init; }
+	public int Value
 	{
-		if (letter is < 'A' or > 'Z')
+		get
 		{
-			throw new ArgumentOutOfRangeException(nameof(letter), "Letter must be an uppercase letter.");
+			if (Type is TileType.Empty or TileType.Blank) return 0;
+
+			return Defaults.LetterValues[Letter - 'A'];
 		}
-		return new(letter, TileType.Letter);
 	}
 
-	private static Tile GetBlank() => new('*', TileType.Blank);
-	private static Tile GetEmpty() => new(' ', TileType.Empty);
-	#endregion
+	public static Tile Empty => new(' ', TileType.Empty);
+	public static Tile Blank => new('*', TileType.Blank);
 
 	#region Equality Members
 	public bool Equals(Tile other) => Type == other.Type && Letter == other.Letter;

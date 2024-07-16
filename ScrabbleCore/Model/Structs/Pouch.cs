@@ -2,19 +2,22 @@
 
 namespace ScrabbleCore.Structs;
 
+/// <summary>
+/// Represents a pouch of tiles.
+/// </summary>
 public struct Pouch
 {
 	private readonly List<Tile> letters;
 	private static readonly Random random = new();
-
-	public readonly int Count => letters.Count;
-	public readonly bool IsEmpty => letters.Count == 0;
 
 	public Pouch()
 	{
 		letters = new List<Tile>(100);
 		Initialize();
 	}
+
+	public readonly int Count => letters.Count;
+	public readonly bool IsEmpty => letters.Count == 0;
 
 	/// <summary>
 	/// Draws a random tile from the pouch.
@@ -34,6 +37,11 @@ public struct Pouch
 		return tile;
 	}
 
+	/// <summary>
+	/// Adds a tile to the pouch.
+	/// </summary>
+	/// <param name="tile"> The tile to add. </param>
+	/// <exception cref="ArgumentException"> Thrown when you try to add an empty tile. </exception>
 	public void Add(Tile tile)
 	{
 		if (tile.Type == TileType.Empty)
@@ -54,7 +62,7 @@ public struct Pouch
 
 				for (int j = 0; j < count; j++)
 				{
-					letters.Add(Tile.GetLetter(c));
+					letters.Add(new Tile(c));
 				}
 			}
 		}
