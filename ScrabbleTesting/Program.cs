@@ -22,7 +22,7 @@ internal class Program
 		Console.WriteLine(board);
 
 		var rack = new TileRack();
-		var letters = new char[] { 'A', 'B', 'C', 'D'};
+		var letters = new char[] { 'A', 'B', 'C', 'D' };
 
 		foreach (var letter in letters)
 		{
@@ -47,8 +47,8 @@ internal class Program
 		var board = new TileBoard();
 		var pouch = new Pouch();
 
-		bool skippedLastTurn = false;
-		for (int i = 0; i < 100; i++)
+		var skippedLastTurn = false;
+		for (var i = 0; i < 100; i++)
 		{
 			// The AI does this automatically, but we need to do it manually so we can see it before the AI plays.
 			player.DrawFullRack(pouch);
@@ -68,6 +68,7 @@ internal class Program
 			if (skippedTurn && skippedLastTurn)
 			{
 				Console.WriteLine("AI skipped their turn 2 times in a row. The game is over.");
+				Console.WriteLine($"Final score: {player.Score}");
 				break;
 			}
 			skippedLastTurn = skippedTurn;

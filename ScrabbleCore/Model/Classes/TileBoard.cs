@@ -1,7 +1,6 @@
-﻿using System.Text;
-
-using ScrabbleCore.Solver.Data;
+﻿using ScrabbleCore.Solver.Data;
 using ScrabbleCore.Structs;
+using System.Text;
 
 namespace ScrabbleCore.Classes;
 
@@ -39,25 +38,51 @@ public sealed class TileBoard : Board<Tile>
 		return true;
 	}
 
+	/// <summary>
+	/// Checks if a tile can be placed on the board.
+	/// </summary>
+	/// <param name="coordinates"> The coordinates to place the tile. </param>
+	/// <param name="tile"> The tile to place. </param>
+	/// <returns> True if the tile can be placed, false otherwise. </returns>
+	public bool CanPlaceTile(Coordinates coordinates, Tile tile)
+	{
+		if (coordinates.X >= Width || coordinates.Y >= Height) return false;
+
+		if (tile == Tile.Empty) return false;
+
+		return this[(int)coordinates.Y, (int)coordinates.X] == Tile.Empty;
+	}
+
+	public void Clear()
+	{
+		for (var y = 0; y < Height; y++)
+		{
+			for (var x = 0; x < Width; x++)
+			{
+				this[y, x] = Tile.Empty;
+			}
+		}
+	}
+
 	public override string ToString()
 	{
 		var sb = new StringBuilder();
 
 		sb.Append('+');
-		for (int i = 0; i < Width; i++) sb.Append('-');
+		for (var i = 0; i < Width; i++) sb.Append('-');
 		sb.Append('+');
 		sb.AppendLine();
 
-		for (int y = 0; y < Height; y++)
+		for (var y = 0; y < Height; y++)
 		{
 			sb.Append('|');
-			for (int x = 0; x < Width; x++) sb.Append(this[y, x]);
+			for (var x = 0; x < Width; x++) sb.Append(this[y, x]);
 			sb.Append('|');
 			sb.AppendLine();
 		}
 
 		sb.Append('+');
-		for (int i = 0; i < Width; i++) sb.Append('-');
+		for (var i = 0; i < Width; i++) sb.Append('-');
 		sb.Append('+');
 
 		return sb.ToString();
@@ -82,7 +107,7 @@ public sealed class TileBoard : Board<Tile>
 			if (endY >= Height) return false;
 		}
 
-		for (int i = 0; i < wordPlacement.Word.Length; i++)
+		for (var i = 0; i < wordPlacement.Word.Length; i++)
 		{
 			var newLetter = wordPlacement.Word[i];
 

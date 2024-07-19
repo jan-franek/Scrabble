@@ -1,18 +1,55 @@
-﻿using ScrabbleCore.Solver.Data;
+﻿using ScrabbleCore.Solver;
+using ScrabbleCore.Solver.Data;
 using ScrabbleCore.Structs;
-using System.Diagnostics.Metrics;
+using System.ComponentModel;
 
 namespace ScrabbleCore.Classes;
 
 /// <summary>
 /// Represents a player in the game.
 /// </summary>
-/// <param name="name"> The name of the player. </param>
-public abstract class Player(string name)
+public abstract class Player : INotifyPropertyChanged
 {
-	public string Name { get; init; } = name;
-	public int Score { get; private set; } = 0;
-	public TileRack Rack { get; init; } = new();
+	protected static readonly SolverInterop solver = new();
+
+	public string Name { get; init; }
+	public TileRack Rack { get; init; } = [];
+
+	private int _score = 0;
+	public int Score
+	{
+		get => _score;
+		set
+		{
+			if (_score != value)
+			{
+				_score = value;
+				OnPropertyChanged(nameof(_score));
+			}
+		}
+	}
+
+	// Make the solver initialization blocking
+	static Player() { }
+
+	/// <param name="name"> The name of the player. </param>
+	protected Player(string name)
+	{
+		Name = name;
+		Rack = [];
+
+		Rack.PropertyChanged += (sender, e) => OnPropertyChanged(nameof(Rack));
+	}
+
+	#region INotifyPropertyChanged
+	public event PropertyChangedEventHandler? PropertyChanged;
+
+	protected virtual void OnPropertyChanged(string propertyName)
+	{
+		PropertyChanged?.Invoke(this, new PropertyChangedEventArgs(propertyName));
+	}
+	#endregion
+
 
 	/// <summary>
 	/// Draws a tile from the pouch and adds it to the player's rack.
@@ -61,6 +98,39 @@ public abstract class Player(string name)
 	/// <param name="score"> The score to add. </param>
 	public void AddScore(int score) => Score += score;
 
+
+
+	/// <summary>
+	/// Either skip the move or exchange letters from the pouch if there are still letters in the pouch.
+	/// The player will always exchange as much letters as possible.
+	/// </summary>
+	protected void SkipMove(Pouch pouch)
+	{
+		if (pouch.IsEmpty) return;
+
+		var numberOfLettersToExchange = Math.Min(Rack.Count, pouch.Count);
+
+		var lettersToExchange = new List<Tile>(numberOfLettersToExchange);
+		var exchangeCount = 0;
+
+		for (var i = 0; i < TileRack.Size; i++)
+		{
+			if (exchangeCount >= numberOfLettersToExchange) break;
+			if (Rack[i] == Tile.Empty) continue;
+
+			lettersToExchange.Add(Rack[i]);
+			Rack[i] = Tile.Empty;
+			exchangeCount++;
+		}
+
+		DrawFullRack(pouch);
+
+		foreach (var letter in lettersToExchange)
+		{
+			pouch.Add(letter);
+		}
+	}
+
 	/// <summary>
 	/// Plays a move on the board and updates the player's rack and score.
 	/// </summary>
@@ -71,7 +141,7 @@ public abstract class Player(string name)
 	{
 		var blanksSet = new HashSet<int>(move.BlankPositions);
 
-		for (int i = 0; i < move.WordPlacement.Word.Length; i++)
+		for (var i = 0; i < move.WordPlacement.Word.Length; i++)
 		{
 			if (blanksSet.Contains(i)) Rack.Remove(Tile.Blank);
 			else Rack.Remove(new Tile(move.WordPlacement.Word[i]));

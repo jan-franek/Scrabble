@@ -3,7 +3,25 @@
              xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
              xmlns:local="clr-namespace:Scrabble"
              StartupUri="MainWindow.xaml">
-    <Application.Resources>
-         
-    </Application.Resources>
+	<Application.Resources>
+		<SolidColorBrush x:Key="ScrabbleBackgroundColor" Color="#285D4D"/>
+		<SolidColorBrush x:Key="LetterTileBackgroundColor" Color="#F2F7BF"/>
+		<Style x:Key="ButtonStyle" TargetType="Button">
+			<Setter Property="Background" Value="{StaticResource LetterTileBackgroundColor}"/>
+			<Setter Property="Foreground" Value="{StaticResource ScrabbleBackgroundColor}"/>
+			<Setter Property="FontSize" Value="24"/>
+			<Setter Property="Template">
+				<Setter.Value>
+					<ControlTemplate TargetType="Button">
+						<Border Background="{TemplateBinding Background}"
+										BorderBrush="Black"
+										BorderThickness="1"
+										CornerRadius="2">
+							<ContentPresenter HorizontalAlignment="Center" VerticalAlignment="Center"/>
+						</Border>
+					</ControlTemplate>
+				</Setter.Value>
+			</Setter>
+		</Style>
+	</Application.Resources>
 </Application>

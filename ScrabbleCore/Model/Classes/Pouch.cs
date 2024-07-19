@@ -1,11 +1,13 @@
 ﻿using ScrabbleCore.Enums;
+using ScrabbleCore.Structs;
+using System.ComponentModel;
 
-namespace ScrabbleCore.Structs;
+namespace ScrabbleCore.Classes;
 
 /// <summary>
 /// Represents a pouch of tiles.
 /// </summary>
-public struct Pouch
+public class Pouch : INotifyPropertyChanged
 {
 	private readonly List<Tile> letters;
 	private static readonly Random random = new();
@@ -16,8 +18,17 @@ public struct Pouch
 		Initialize();
 	}
 
-	public readonly int Count => letters.Count;
-	public readonly bool IsEmpty => letters.Count == 0;
+	public int Count => letters.Count;
+	public bool IsEmpty => letters.Count == 0;
+
+	#region INotifyPropertyChanged
+	public event PropertyChangedEventHandler? PropertyChanged;
+
+	private void OnPropertyChanged(string propertyName)
+	{
+		PropertyChanged?.Invoke(this, new PropertyChangedEventArgs(propertyName));
+	}
+	#endregion
 
 	/// <summary>
 	/// Draws a random tile from the pouch.
@@ -31,9 +42,10 @@ public struct Pouch
 			throw new InvalidOperationException("The pouch is empty.");
 		}
 
-		int index = random.Next(letters.Count);
-		Tile tile = letters[index];
+		var index = random.Next(letters.Count);
+		var tile = letters[index];
 		letters.RemoveAt(index);
+		OnPropertyChanged(nameof(Count));
 		return tile;
 	}
 
@@ -50,24 +62,25 @@ public struct Pouch
 		}
 
 		letters.Add(tile);
+		OnPropertyChanged(nameof(Count));
 	}
 
 	private void Initialize()
 	{
 		{
-			char c = 'A';
-			for (int i = 0; i < Defaults.NumberOfLetters; i++, c++)
+			var c = 'A';
+			for (var i = 0; i < Defaults.NumberOfLetters; i++, c++)
 			{
-				int count = Defaults.PouchLetterCounts[i];
+				var count = Defaults.PouchLetterCounts[i];
 
-				for (int j = 0; j < count; j++)
+				for (var j = 0; j < count; j++)
 				{
 					letters.Add(new Tile(c));
 				}
 			}
 		}
 
-		for (int i = 0; i < 2; i++)
+		for (var i = 0; i < 2; i++)
 		{
 			letters.Add(Tile.Blank);
 		}

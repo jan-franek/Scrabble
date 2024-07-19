@@ -9,20 +9,20 @@ namespace ScrabbleCore.Solver.Data;
 public readonly struct WordPlay(WordPlacement wordPlacement, IReadOnlyList<int> blankPositions, int score)
 {
 
-  [JsonPropertyName("blanks")]
-  public IReadOnlyList<int> BlankPositions { get; init; } = blankPositions;
+	[JsonPropertyName("blanks")]
+	public IReadOnlyList<int> BlankPositions { get; init; } = blankPositions;
 
-  [JsonPropertyName("score")]
-  public int Score { get; init; } = score;
+	[JsonPropertyName("score")]
+	public int Score { get; init; } = score;
 
-  [JsonPropertyName("wp")]
-  public WordPlacement WordPlacement { get; init; } = wordPlacement;
+	[JsonPropertyName("wp")]
+	public WordPlacement WordPlacement { get; init; } = wordPlacement;
 
-  public override string ToString()
+	public override string ToString()
 	{
-    return
-      $"Score: [{Score}], " +
-      $"Word: [{WordPlacement.Word}], " +
-      $"Placement: [{WordPlacement.StartTile.X}, {WordPlacement.StartTile.Y}] - {WordPlacement.Direction}";
+		return
+			$"Score: [{Score}], " +
+			$"Word: [{WordPlacement.Word}], " +
+			$"Placement: [{WordPlacement.StartTile.X}, {WordPlacement.StartTile.Y}] - {WordPlacement.Direction}";
 	}
 }

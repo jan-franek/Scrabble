@@ -20,16 +20,16 @@ namespace ScrabbleCore.Solver.Data
 		{
 			var sb = new StringBuilder(225 + 1 + 7);
 
-			for (int y = 0; y < TileBoard.Height; y++)
+			for (var y = 0; y < TileBoard.Height; y++)
 			{
-				for (int x = 0; x < TileBoard.Width; x++)
+				for (var x = 0; x < TileBoard.Width; x++)
 				{
 					// The coords are inverted because the solver interprets the board as (y, x) instead of (x, y).
 					sb.Append(Board[y, x].Letter);
 				}
 			}
 
-			for (int i = 0; i < TileRack.Size; i++)
+			for (var i = 0; i < TileRack.Size; i++)
 			{
 				sb.Append(Rack[i].Letter);
 			}

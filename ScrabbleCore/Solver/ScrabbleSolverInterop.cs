@@ -1,7 +1,10 @@
 ﻿using ScrabbleCore.Solver.Data;
+using System.Runtime.CompilerServices;
 using System.Runtime.InteropServices;
 using System.Text.Json;
 using System.Text.Json.Serialization;
+
+[assembly: InternalsVisibleTo("ScrabbleCoreTests")]
 
 namespace ScrabbleCore.Solver;
 
@@ -11,14 +14,14 @@ namespace ScrabbleCore.Solver;
 /// </summary>
 public partial class SolverInterop : IDisposable
 {
-	private const string dictionaryPath = @"C:\Code\C#\Scrabble\ScrabbleCore\Solver\Dictionary\csw19.txt";
-	private static readonly JsonSerializerOptions jsonOptions = new()
+	internal const string dictionaryPath = @"C:\Code\C#\Scrabble\ScrabbleCore\Solver\Dictionary\csw19.txt";
+	internal static readonly JsonSerializerOptions jsonOptions = new()
 	{
 		Converters = { new JsonStringEnumConverter(namingPolicy: JsonNamingPolicy.CamelCase) },
 		PropertyNameCaseInsensitive = true
 	};
 
-	private IntPtr solverInstance;
+	internal IntPtr solverInstance;
 
 	/// <summary>
 	/// Creates a new solver instance.
@@ -27,7 +30,7 @@ public partial class SolverInterop : IDisposable
 	/// <returns> Pointer to the solver instance. </returns>
 	[LibraryImport("scrabble_solver_api.dll", StringMarshalling = StringMarshalling.Custom, StringMarshallingCustomType = typeof(System.Runtime.InteropServices.Marshalling.AnsiStringMarshaller))]
 	[UnmanagedCallConv(CallConvs = [typeof(System.Runtime.CompilerServices.CallConvCdecl)])]
-	private static partial IntPtr CreateSolver(string dictionaryPath);
+	internal static partial IntPtr CreateSolver(string dictionaryPath);
 
 	/// <summary>
 	/// Calls the solver to solve the given input.
@@ -37,7 +40,7 @@ public partial class SolverInterop : IDisposable
 	/// <returns> Pointer to the JSON string containing the results. </returns>
 	[LibraryImport("scrabble_solver_api.dll", StringMarshalling = StringMarshalling.Custom, StringMarshallingCustomType = typeof(System.Runtime.InteropServices.Marshalling.AnsiStringMarshaller))]
 	[UnmanagedCallConv(CallConvs = [typeof(System.Runtime.CompilerServices.CallConvCdecl)])]
-	private static partial IntPtr SolveScrabble(IntPtr solver, string input);
+	internal static partial IntPtr SolveScrabble(IntPtr solver, string input);
 
 	/// <summary>
 	/// Deletes the solver instance.
@@ -45,14 +48,14 @@ public partial class SolverInterop : IDisposable
 	/// <param name="solver"> Pointer to the solver instance. </param>
 	[LibraryImport("scrabble_solver_api.dll")]
 	[UnmanagedCallConv(CallConvs = [typeof(System.Runtime.CompilerServices.CallConvCdecl)])]
-	private static partial void DeleteSolver(IntPtr solver);
+	internal static partial void DeleteSolver(IntPtr solver);
 
 	/// <summary>
 	/// Free the memory allocated to the JSON result string.
 	/// </summary>
 	/// <param name="ptr"> Pointer to the JSON result string. </param>
 	[LibraryImport("scrabble_solver_api.dll")]
-	private static partial void FreeMemory(IntPtr ptr);
+	internal static partial void FreeMemory(IntPtr ptr);
 
 	public SolverInterop()
 	{
@@ -71,7 +74,7 @@ public partial class SolverInterop : IDisposable
 	/// <exception cref="InvalidOperationException"> Thrown when the solver fails to solve the game state. </exception>
 	public List<WordPlay> Solve(GameState gameState)
 	{
-		IntPtr resultsPtr = IntPtr.Zero;
+		var resultsPtr = IntPtr.Zero;
 		string? jsonResults;
 
 		try

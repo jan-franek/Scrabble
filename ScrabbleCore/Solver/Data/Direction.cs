@@ -8,9 +8,9 @@ namespace ScrabbleCore.Solver.Data;
 /// </summary>
 public enum Direction
 {
-  [JsonPropertyName("Horizontal")]
-  Horizontal,
+	[JsonPropertyName("Horizontal")]
+	Horizontal,
 
-  [JsonPropertyName("Vertical")]
-  Vertical,
+	[JsonPropertyName("Vertical")]
+	Vertical,
 }

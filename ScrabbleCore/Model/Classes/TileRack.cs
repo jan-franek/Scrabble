@@ -1,6 +1,5 @@
-﻿using System.Text;
-
-using ScrabbleCore.Structs;
+﻿using ScrabbleCore.Structs;
+using System.Text;
 
 namespace ScrabbleCore.Classes;
 
@@ -14,6 +13,7 @@ public sealed class TileRack : Rack<Tile>
 	/// </summary>
 	public int Count => rack.Count(t => t != Tile.Empty);
 	public bool IsFull => Count == Size;
+	public bool IsEmpty => Count == 0;
 
 	public TileRack() : base(Tile.Empty) { }
 
@@ -22,7 +22,12 @@ public sealed class TileRack : Rack<Tile>
 	/// </summary>
 	/// <param name="tile"></param>
 	/// <returns></returns>
-	public bool Contains(Tile tile) => rack.Contains(tile);
+	public bool Contains(Tile tile)
+	{
+		if (tile == Tile.Empty) return false;
+
+		return rack.Contains(tile);
+	}
 
 	/// <summary>
 	/// Counts the number of occurrences of a specific tile in the rack.
@@ -38,10 +43,10 @@ public sealed class TileRack : Rack<Tile>
 	/// <returns> True if the tile was removed, false otherwise. </returns>
 	public bool Remove(Tile tile)
 	{
-		int index = Array.IndexOf(rack, tile);
+		var index = Array.IndexOf(rack, tile);
 		if (index == -1) return false;
 
-		rack[index] = Tile.Empty;
+		this[index] = Tile.Empty;
 		return true;
 	}
 
@@ -52,10 +57,12 @@ public sealed class TileRack : Rack<Tile>
 	/// <returns> True if the tile was added, false otherwise. </returns>
 	public bool Add(Tile tile)
 	{
-		int index = Array.IndexOf(rack, Tile.Empty);
+		if (tile == Tile.Empty) return false;
+
+		var index = Array.IndexOf(rack, Tile.Empty);
 		if (index == -1) return false;
 
-		rack[index] = tile;
+		this[index] = tile;
 		return true;
 	}
 
@@ -64,14 +71,14 @@ public sealed class TileRack : Rack<Tile>
 		var sb = new StringBuilder();
 
 		sb.Append('+');
-		for (int i = 0; i < Size; i++) sb.Append("-+");
+		for (var i = 0; i < Size; i++) sb.Append("-+");
 		sb.AppendLine();
 
 		sb.Append('|' + string.Join('|', rack) + '|');
 		sb.AppendLine();
 
 		sb.Append('+');
-		for (int i = 0; i < Size; i++) sb.Append("-+");
+		for (var i = 0; i < Size; i++) sb.Append("-+");
 
 		return sb.ToString();
 	}

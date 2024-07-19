@@ -1,6 +1,7 @@
-﻿using System.Windows;
-
-using Scrabble.Pages;
+﻿using Scrabble.Pages;
+using ScrabbleCore.Classes;
+using ScrabbleCore.Enums;
+using System.Windows;
 
 namespace Scrabble
 {
@@ -26,14 +27,14 @@ namespace Scrabble
 			MainFrame.Navigate(new HelpPage());
 		}
 
-		public void GoToGame()
+		public void GoToGame(AIDifficulty difficulty)
 		{
-			MainFrame.Navigate(new GamePage());
+			MainFrame.Navigate(new GamePage(difficulty));
 		}
 
-		public void GoToGameOver()
+		public void GoToGameOver(Game game)
 		{
-			MainFrame.Navigate(new GameOverPage());
+			MainFrame.Navigate(new GameOverPage(game));
 		}
 	}
 }
