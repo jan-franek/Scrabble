@@ -9,7 +9,13 @@ Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "ScrabbleCore", "ScrabbleCor
 EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "ScrabbleTesting", "ScrabbleTesting\ScrabbleTesting.csproj", "{1B25F7AF-0BB9-4CE4-9009-3DD122DFD419}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "ScrabbleCoreTests", "ScrabbleCoreTests\ScrabbleCoreTests.csproj", "{872D94DC-66C7-4EE0-B9D3-1071A423E2B2}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "ScrabbleCoreTests", "ScrabbleCoreTests\ScrabbleCoreTests.csproj", "{872D94DC-66C7-4EE0-B9D3-1071A423E2B2}"
+EndProject
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Solution Items", "Solution Items", "{A26199E9-49C8-4259-8679-819001409478}"
+	ProjectSection(SolutionItems) = preProject
+		README.md = README.md
+		SPECIFICATION.md = SPECIFICATION.md
+	EndProjectSection
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution

@@ -144,7 +144,6 @@ public sealed class HumanPlayer : Player
 
 		PlayMove(wordPlay, board);
 		TemporaryBoard.Clear();
-		AddScore(wordPlay.Score);
 		DrawFullRack(pouch);
 
 		return (true, false);
@@ -176,7 +175,7 @@ public sealed class HumanPlayer : Player
 			}
 		}
 
-		if (!placedTiles.Any()) return (true, true); // No tiles placed (skipped turn)
+		if (placedTiles.Count == 0) return (true, true); // No tiles placed (skipped turn)
 
 		// Just one tile placed (can't determine the direction)
 		if (placedTiles.Count == 1)
@@ -250,6 +249,14 @@ public sealed class HumanPlayer : Player
 		return (true, false);
 	}
 
+	/// <summary>
+	/// Gets the word from combination of tiles on the board and temporary board.
+	/// </summary>
+	/// <param name="baseBoard"> The base board. </param>
+	/// <param name="start"> The start position. </param>
+	/// <param name="end"> The end position. </param>
+	/// <param name="direction"> The direction of the word. </param>
+	/// <returns> The word placement. </returns>
 	private WordPlacement GetWordFromDirection(TileBoard baseBoard, Coordinates start, Coordinates end, Direction direction)
 	{
 		var dx = direction == Direction.Horizontal ? 1 : 0;

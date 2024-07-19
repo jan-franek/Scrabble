@@ -9,7 +9,7 @@ namespace ScrabbleCoreTests.Model
 		public void Rack_Initializes_WithEmptyTiles()
 		{
 			var rack = new TileRack();
-			foreach (var tile in rack.rack)
+			foreach (var tile in rack)
 			{
 				Assert.Equal(Tile.Empty, tile);
 			}

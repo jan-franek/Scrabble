@@ -1,4 +1,5 @@
 ﻿using ScrabbleCore;
+using ScrabbleCore.Classes;
 using ScrabbleCore.Structs;
 
 namespace ScrabbleCoreTests.Model

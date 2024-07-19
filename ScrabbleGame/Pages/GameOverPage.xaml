@@ -1,16 +1,17 @@
-﻿<Page x:Class="Scrabble.Pages.GameOverPage"
+﻿<Page x:Class="ScrabbleGame.Pages.GameOverPage"
       xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
       xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
       xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
       xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
-      xmlns:local="clr-namespace:Scrabble.Pages"
+      xmlns:local="clr-namespace:ScrabbleGame.Pages"
       mc:Ignorable="d"
       d:DesignHeight="900" d:DesignWidth="800"
       Title="GameOverPage"
 			Background="{StaticResource ScrabbleBackgroundColor}">
 
-	<Grid VerticalAlignment="Center" HorizontalAlignment="Center" Height="330">
+	<Grid VerticalAlignment="Center" HorizontalAlignment="Center">
 		<Grid.RowDefinitions>
+			<RowDefinition Height="Auto"/>
 			<RowDefinition Height="Auto"/>
 			<RowDefinition Height="Auto"/>
 			<RowDefinition Height="Auto"/>
@@ -43,8 +44,8 @@
 			</TextBlock.Text>
 		</TextBlock>
 
-		<Button HorizontalAlignment="Left" Grid.Row="3"
+		<Button HorizontalAlignment="Center" Grid.Row="4"
 						Content="Return to Menu" Click="ReturnToMenu_Click" Style="{StaticResource ButtonStyle}"
-						Height="50" Width="240" Margin="0,115,0,-75"/>
+						Height="50" Width="240"/>
 	</Grid>
 </Page>

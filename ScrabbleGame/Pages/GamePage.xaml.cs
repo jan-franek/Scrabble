@@ -6,7 +6,7 @@ using System.Windows;
 using System.Windows.Controls;
 using System.Windows.Input;
 
-namespace Scrabble.Pages
+namespace ScrabbleGame.Pages
 {
 	/// <summary>
 	/// Interaction logic for GamePage.xaml

@@ -3,7 +3,7 @@ using System.Windows;
 using System.Windows.Controls;
 using System.Windows.Navigation;
 
-namespace Scrabble.Pages
+namespace ScrabbleGame.Pages
 {
 	/// <summary>
 	/// Interaction logic for HelpPage.xaml

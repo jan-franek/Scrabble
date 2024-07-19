@@ -1,9 +1,9 @@
-﻿using Scrabble.Pages;
-using ScrabbleCore.Classes;
+﻿using ScrabbleCore.Classes;
 using ScrabbleCore.Enums;
+using ScrabbleGame.Pages;
 using System.Windows;
 
-namespace Scrabble
+namespace ScrabbleGame
 {
 	/// <summary>
 	/// Interaction logic for MainWindow.xaml

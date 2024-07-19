@@ -3,7 +3,7 @@ using ScrabbleGame.ViewModel;
 using System.Windows;
 using System.Windows.Controls;
 
-namespace Scrabble.Pages
+namespace ScrabbleGame.Pages
 {
 	/// <summary>
 	/// Interaction logic for GameOverPage.xaml
